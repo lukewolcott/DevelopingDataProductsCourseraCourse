@@ -1,0 +1,95 @@
+---
+title: "Art Grants in LA"
+author: "Luke Wolcott"
+date: "December 17, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+---
+
+### Week 3 assignment for JHU: Developing Data Products
+
+#### Instructions:
+
+Create a web page presentation using R Markdown that features a plot created with Plotly. Host your webpage on either GitHub Pages, RPubs, or NeoCities. Your webpage must contain the date that you created the document, and it must contain a plot created with Plotly. 
+
+---
+
+### Dataset
+
+The data come from the following website.
+
+```https://data.lacounty.gov/Arts-and-Culture/Organizational-Grants-for-Arts-Services/73tm-r9gy```
+
+It contains information about art grants given through the Organizational Grant Program of the Los Angeles County Arts Commission, over the three application years of 2014-15, 2015-16, and 2016-17.  This was accessed on December 17th 2016, and downloaded as a 92 kb CSV file into the working directory.  See the Appendix for code.
+
+
+```{r, echo=FALSE}
+data <- read.csv("Organizational_Grants_for_Arts_Services.csv")
+library(plotly)
+library(dplyr)
+```
+
+
+```{r, echo=FALSE}
+data$Grant.Award <- sub('.','',as.character(data$Grant.Award))
+data$Grant.Award <- as.numeric(data$Grant.Award)
+for (i in 1:568)
+      if (data[i,2] == "Arts Service/")
+            data[i,2] <- as.factor("Arts Service ")
+```
+
+
+### A. Spread of money awarded, by discipline
+
+```{r, echo=FALSE}
+plot_ly(data, y = ~Grant.Award, color = ~Discipline, type = "box")
+```
+
+### B. Spread of money awarded, by application year
+
+```{r, echo=FALSE}
+plot_ly(data, y = ~Grant.Award, color = ~Application.Year, type="box")
+```
+
+### C. Number of grants awarded versus total amount awarded, by discipline
+
+```{r, echo=FALSE}
+by_disc <- group_by(data, Discipline)
+d <-summarize(by_disc, Total.Amount.Awarded = sum(Grant.Award), Number.Awarded = length(Grant.Award))
+plot_ly(d, x=~Number.Awarded, y=~Total.Amount.Awarded, mode="markers", text = ~Discipline)
+```
+
+### Appendix: Code
+
+```{r, eval=FALSE}
+# Data and cleaning
+data <- read.csv("Organizational_Grants_for_Arts_Services.csv")
+library(plotly)
+library(dplyr)
+
+# Convert the grant award amount to a numeric that is easy to work with.  
+# Fix a typo in the name of one of the disciplines.
+data$Grant.Award <- sub('.','',as.character(data$Grant.Award))
+data$Grant.Award <- as.numeric(data$Grant.Award)
+for (i in 1:568)
+      if (data[i,2] == "Arts Service/")
+            data[i,2] <- as.factor("Arts Service ")
+
+# A. Spread of money awarded, by discipline
+plot_ly(data, y = ~Grant.Award, color = ~Discipline, type = "box")
+
+# B. Spread of money awarded, by application year
+plot_ly(data, y = ~Grant.Award, color = ~Application.Year, type="box")
+
+# C. Number of grants awarded versus total amount awarded, by discipline
+by_disc <- group_by(data, Discipline)
+d <-summarize(by_disc, Total.Amount.Awarded = sum(Grant.Award), Number.Awarded = length(Grant.Award))
+plot_ly(d, x=~Number.Awarded, y=~Total.Amount.Awarded, mode="markers", text = ~Discipline)
+```
+
+---
