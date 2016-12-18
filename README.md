@@ -13,3 +13,9 @@ https://lukewolcott.github.io/DevelopingDataProductsCourseraCourse/LACrimes.html
 This plotly assignment is ArtGrants.Rmd, which is visible as a webpage at:
 
 https://lukewolcott.github.io/DevelopingDataProductsCourseraCourse/ArtGrants.html
+
+## Course project
+
+The assignment was to make a Shiny App.  I used hourly data on Los Angeles crimes.  The files are in the CourseProject folder.  App website:
+
+https://lukewolcott.shinyapps.io/courseproject/
