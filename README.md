@@ -16,6 +16,11 @@ https://lukewolcott.github.io/DevelopingDataProductsCourseraCourse/ArtGrants.htm
 
 ## Course project
 
-The assignment was to make a Shiny App.  I used hourly data on Los Angeles crimes.  The files are in the CourseProject folder.  App website:
+The assignment was to make a Shiny App.  I used hourly data on Los Angeles crimes, and the user can choose which types of crimes to view.  The files are in the CourseProject folder.  App website (which includes documentation):
 
 https://lukewolcott.shinyapps.io/courseproject/
+
+For an R Presentation pitch for the app, see:
+
+https://lukewolcott.github.io/DevelopingDataProductsCourseraCourse/CourseProjectPitch-rpubs.html
+
